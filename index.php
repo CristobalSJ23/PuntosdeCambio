@@ -23,5 +23,5 @@ $routes->run($datos);
 
 // require_once("controllers/loginController.php");
 // $inc = new LoginController();
-
+/* Elektra */
 ?>
