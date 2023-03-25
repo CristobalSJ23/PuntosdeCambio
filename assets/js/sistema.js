@@ -57,13 +57,28 @@ $(document).ready(function() {
         $('.checkmarx' + id).html('<input style="width:100%" class="form-control checkmarxIN' + id + '" value=' + checkmarx + '>');
         $('.aprobado' + id).html('<input style="width:100%" class="form-control aprobadoIN' + id + '" value=' + aprobado + '>');
         $('.fuente' + id).html('<input style="width:100%" class="form-control fuenteIN' + id + '" value=' + fuente + '>');
-        $('.resuelto' + id).html('<input type="number" min="0" style="width:100%" class="form-control resueltoIN' + id + '" value=' + resuelto + '>');
-        $('.aprobados' + id).html('<input type="number" min="0" style="width:100%" class="form-control aprobadosIN' + id + '" value=' + aprobados + '>');
-        $('.altas' + id).html('<input  type="number" min="0" style="width:100%" class="form-control altasIN' + id + '" value=' + altas + '>');
-        $('.medias' + id).html('<input type="number" min="0" style="width:100%" class="form-control mediasIN' + id + '" value=' + medias + '>');
-        $('.bajas' + id).html('<input type="number" min="0" style="width:100%" class="form-control bajasIN' + id + '" value=' + bajas + '>');
+        $('.resuelto' + id).html('<input min="0" style="width:100%" class="form-control resueltoIN' + id + '" value=' + resuelto + '>');
+        $('.aprobados' + id).html('<input min="0" style="width:100%" class="form-control aprobadosIN' + id + '" value=' + aprobados + '>');
+        $('.altas' + id).html('<input min="0" style="width:100%" class="form-control altasIN' + id + '" value=' + altas + '>');
+        $('.medias' + id).html('<input min="0" style="width:100%" class="form-control mediasIN' + id + '" value=' + medias + '>');
+        $('.bajas' + id).html('<input min="0" style="width:100%" class="form-control bajasIN' + id + '" value=' + bajas + '>');
         $('.observacion' + id).html('<input style="width:100%" class="form-control observacionIN' + id + '" value=' + observacion + '>');
 
+        $('.resueltoIN' + id).keypress(function(tecla) {
+            if (tecla.charCode < 48 || tecla.charCode > 57) return false;
+        });
+        $('.aprobadosIN' + id).keypress(function(tecla) {
+            if (tecla.charCode < 48 || tecla.charCode > 57) return false;
+        });
+        $('.altasIN' + id).keypress(function(tecla) {
+            if (tecla.charCode < 48 || tecla.charCode > 57) return false;
+        });
+        $('.mediasIN' + id).keypress(function(tecla) {
+            if (tecla.charCode < 48 || tecla.charCode > 57) return false;
+        });
+        $('.bajasIN' + id).keypress(function(tecla) {
+            if (tecla.charCode < 48 || tecla.charCode > 57) return false;
+        });
         $('.editar_acciones_' + id).hide();
         $('.editar_acciones_cancelar' + id).removeAttr('style');
     });
@@ -82,46 +97,46 @@ $(document).ready(function() {
         var bajas = $('.bajasIN' + id).val();
         var observacion = $('.observacionIN' + id).val();
         //modi
-        var totalPDC = $('.total' + id).val();
+        var totalPDC = $('.total' + id).text();
+        let totalSuma = parseInt(altas) + parseInt(bajas) + parseInt(medias);
+        //alert(totalSuma + "/" + totalPDC);
+        let totalresyapro = (parseInt(resuelto)) + (parseInt(aprobados));
+        if ((totalresyapro !== parseInt(totalPDC)) || totalSuma !== (parseInt(totalPDC))) {
+            $('.mensaje_sistema').html('Existe discrepancia entre el total de puntos de cambio y los nuevos datos');
+            $('#mensajeModal').modal('show');
+        } else {
 
-        let totalRiesgos = parseInt(altas) + parseInt(bajas) + parseInt(medias);
-        alert(totalRiesgos + "/" + parseInt(totalPDC));
+            obj.url = '../sistema/updateSistema';
+            obj.data = {
+                idSistema: id,
+                idEstatus: selectEstatusId,
+                checkmarx: checkmarx,
+                aprobado: aprobado,
+                fuente: fuente,
+                resuelto: resuelto,
+                aprobados: aprobados,
+                altas: altas,
+                medias: medias,
+                bajas: bajas,
+                observacion: observacion
+            };
+            obj.type = 'POST';
+            obj.accion = 'update';
 
-        if ((totalVulnerabilidades) > (resuelto + aprobados)) {
-            console.log('el total de las');
-            alert('vulne' + totalVulnerabilidades);
-        }
-
-        obj.url = '../sistema/updateSistema';
-        obj.data = {
-            idSistema: id,
-            idEstatus: selectEstatusId,
-            checkmarx: checkmarx,
-            aprobado: aprobado,
-            fuente: fuente,
-            resuelto: resuelto,
-            aprobados: aprobados,
-            altas: altas,
-            medias: medias,
-            bajas: bajas,
-            observacion: observacion
-        };
-        obj.type = 'POST';
-        obj.accion = 'update';
-
-        $('.estatus' + id).html(selectEstatusText);
-        $('.checkmarx' + id).html(checkmarx);
-        $('.aprobado' + id).html(aprobado);
-        $('.fuente' + id).html(fuente);
-        $('.resuelto' + id).html(resuelto);
-        $('.aprobados' + id).html(aprobados);
-        $('.altas' + id).html(altas);
-        $('.medias' + id).html(medias);
-        $('.bajas' + id).html(bajas);
-        $('.observacion' + id).html(observacion);
-        $('.editar_acciones_' + id).show();
-        $('.editar_acciones_cancelar' + id).hide();
-        peticionAjax(obj);
+            $('.estatus' + id).html(selectEstatusText);
+            $('.checkmarx' + id).html(checkmarx);
+            $('.aprobado' + id).html(aprobado);
+            $('.fuente' + id).html(fuente);
+            $('.resuelto' + id).html(resuelto);
+            $('.aprobados' + id).html(aprobados);
+            $('.altas' + id).html(altas);
+            $('.medias' + id).html(medias);
+            $('.bajas' + id).html(bajas);
+            $('.observacion' + id).html(observacion);
+            $('.editar_acciones_' + id).show();
+            $('.editar_acciones_cancelar' + id).hide();
+            peticionAjax(obj);
+        } //cierra else
     });
 
     $('.cancelar').click(function() {
@@ -150,6 +165,8 @@ $(document).ready(function() {
         $('.editar_acciones_' + id).show();
         $('.editar_acciones_cancelar' + id).hide();
     });
+
+
 });
 
 
