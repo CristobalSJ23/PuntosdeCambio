@@ -41,7 +41,7 @@ class RolModel{
 
     public function save($nombre){
         $fecha = getdate();
-        $fecha_registro = $fecha["year"]."-".$fecha["mon"]."-".$fecha["mday"];
+        $fecha_registro = $fecha["year"]."-".$fecha["mon"]."-".$fecha["mday"]-1;
         $query = "INSERT INTO co_roles (nombre,fecha_reg,estatus) VALUES ('".$nombre."','".$fecha_registro."',1)";
         $res = mysqli_query($this->con, $query);
         $id = mysqli_insert_id($this->con);

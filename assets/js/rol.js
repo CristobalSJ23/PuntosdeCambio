@@ -39,6 +39,11 @@ $(document).ready(function() {
         var selectHtml = $('.editar_estatus_' + id).html();
         $('.editar_estatus_' + id).removeClass(color);
         $('.editar_nombre_' + id).html('<input name="guardar_nombre_' + id + '" class="form-control guardar_nombre_' + id + '" value="' + textHtml + '" />');
+        
+        $('.guardar_nombre_' + id).keypress(function (tecla) {
+            if ((tecla.charCode < 65 || tecla.charCode > 90) && (tecla.charCode < 97 || tecla.charCode > 122)) return false;
+        });
+
         if (selectHtml == 'ACTIVO') {
             activo = 'selected';
             $('.editar_estatus_'+id).removeClass("bg-success");
@@ -110,11 +115,7 @@ $(document).ready(function() {
         $("input[type=checkbox]:checked").each(function(){
             idSubmenus.push([menu,this.value]);
         });
-      
-        //var id = $(this).data('id');
 
-        //console.log(idSubmenus);
-        
         if (nombre != '') {
             obj.url = '../rol/save';
             obj.data = datos;
@@ -125,7 +126,7 @@ $(document).ready(function() {
         } else {
             alert('No hay nombre');
         }
-        window.location.reload();
+        //window.location.reload();
     });
 
     $('.abrir').click(function(){
@@ -155,6 +156,7 @@ $(document).ready(function() {
 
     $('.cerrarModal').click(function(){
         $('.crear_rol_modal').modal("hide");
+        $('#mensajeModal').modal("hide");
     });
 
     $('.eliminar').click(function(){
@@ -165,6 +167,10 @@ $(document).ready(function() {
         obj.accion = 'delete';
         obj.id = id;
         peticionAjax(obj);
+    });
+
+    $('.inpArquitecto').keypress(function (tecla) {
+        if ((tecla.charCode < 65 || tecla.charCode > 90) && (tecla.charCode < 97 || tecla.charCode > 122)) return false;
     });
 
 
@@ -191,6 +197,7 @@ function peticionAjax(datos) {
                     $('#imputNombre').val('');
                     $('.abrir').click();
                     $('input[type=checkbox]').prop("checked", false);
+                    time();
                     break;
                 case "delete":
                     $('.editar_estatus_' + datos.id).removeClass("bg-success");
@@ -205,4 +212,10 @@ function peticionAjax(datos) {
     });
 
 
+}
+
+function time() {
+    setTimeout(function(){
+        window.location.reload();
+    }, 1000);
 }

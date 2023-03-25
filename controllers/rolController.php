@@ -46,21 +46,23 @@ class RolController extends coreController{
     public function save(){
         $resId = $this->rol->save($_POST['nombre']);
         $guardarRelacion["id"] = array();
-        foreach($_POST['checkMenu'] as $i => $chkMenu){
-            $resRelacion = $this->rol->getRelation($chkMenu);
-            foreach($resRelacion['id'] as $j => $idSubMenu){
-                foreach($_POST['checkSubMenu'] as $k => $checkSubMenu){
-                    if($checkSubMenu == $idSubMenu){
-                        array_push($guardarRelacion["id"],$checkSubMenu);
+        if(isset($_POST['checkMenu'])) {
+            foreach($_POST['checkMenu'] as $i => $chkMenu){
+                $resRelacion = $this->rol->getRelation($chkMenu);
+                foreach($resRelacion['id'] as $j => $idSubMenu){
+                    foreach($_POST['checkSubMenu'] as $k => $checkSubMenu){
+                        if($checkSubMenu == $idSubMenu){
+                            array_push($guardarRelacion["id"],$checkSubMenu);
+                        }
                     }
                 }
-            }
-            $formatoJson = json_encode($guardarRelacion);
-            $resultado = str_replace("[","",$formatoJson);
-            $resultado = str_replace("]","",$resultado);
-            $guardarRelRolMenu =$this->rol->saveRelation($resId,$chkMenu,$resultado);
-            $guardarRelacion["id"] = array();
-        } 
+                $formatoJson = json_encode($guardarRelacion);
+                $resultado = str_replace("[","",$formatoJson);
+                $resultado = str_replace("]","",$resultado);
+                $guardarRelRolMenu =$this->rol->saveRelation($resId,$chkMenu,$resultado);
+                $guardarRelacion["id"] = array();
+            } 
+        }
         $data["res"] = "Tu registro se ha agregado correctamente";
         echo json_encode($data);
         //$data["res"] = "Se ha agregado correctamente el Rol";

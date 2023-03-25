@@ -74,8 +74,8 @@
           <div class="col-md-4">
             <label for="inputNombre" class="form-label">Nombre del rol de usuario:</label>
             <div class="d-flex">
-              <input type="text" class="form-control" id="imputNombre" /required name="nombre" maxlength="50"
-                placeholder="Escriba el nombre">
+              <input type="text" class="form-control inpArquitecto" id="imputNombre" required name="nombre" maxlength="50"
+                placeholder="Escriba el nombre" pattern="[A-Za-z]">
             </div>
             <?php if (isset($datos['errorRol'])) { ?>
               <div class="alert alert-danger">
@@ -98,8 +98,8 @@
                   </td>
 
                   <td width="100%">
-                    <div class="accordion-item">
-                      <h2 class="accordion-header accordion btn-primary" id="panelsStayOpen-headingOne">
+                    <div class="accordion-item" id="flexCheckDefault<?= $resMenu['id'][$i] ?>">
+                      <h2 class="accordion-header accordion btn-primary" id="panelsStayOpen-headingOne" id="flexCheckDefault<?= $resMenu['id'][$i] ?>">
                         <button class="accordion btn btn-primary" type="button" width="100%">
                           <?= $rm ?>
                         </button>
