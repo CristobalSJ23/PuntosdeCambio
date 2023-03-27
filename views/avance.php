@@ -24,8 +24,8 @@
         <td> <?php echo $res['total'][$i] ?> </td>
         <td> <?php echo $res['resuelto'][$i] ?> </td>
         <td> <?php echo $res['aprobados'][$i] ?> </td>
-        <td> <?php echo $res['pResuelto'][$i] ?> </td>
-        <td> <?php echo $res['pAprobados'][$i] ?> </td>
+        <td><?php echo sprintf('%.2f', $res['pResuelto'][$i]) ?>  </td>
+        <td><?php echo sprintf('%.2f', $res['pResuelto'][$i]) ?>  </td>
         <?php
         }}
         ?>
