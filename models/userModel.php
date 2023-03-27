@@ -72,11 +72,15 @@ class userModel{
 
         $res = mysqli_query($this->con, $query);
         $i = 0;
+        if(mysqli_num_rows($res)>0){
         while($row = mysqli_fetch_assoc($res)) {
             $data['iduser'][$i] = $row['id_usuario'];
             $data['nombre'][$i] = $row['nombreCompleto'];
             $i++;
         }
+    }else{
+        $data['sinData'] = "No se encontraron registros";
+    }
         
 
         return $data;

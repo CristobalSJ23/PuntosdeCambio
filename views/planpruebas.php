@@ -38,51 +38,51 @@
           <?php echo $res['url'][$i] ?>
         </td>
         <td class="arquitecto<?=$id?>">
-          <?php foreach($arquitectos['iduser'] as $j => $idArq){ 
+          <?php if(isset($arquitectos['iduser'])){foreach($arquitectos['iduser'] as $j => $idArq){ 
               if($res['arquitecto'][$i] == $idArq){
                 echo $arquitectos['nombre'][$j];
               }
-            }
+            }}
           ?>
         </td>
         <td class="programador<?=$id?>">
-          <?php foreach($programadores['idprog'] as $j => $idProg){ 
+          <?php if(isset($programadores['idprog'])){foreach($programadores['idprog'] as $j => $idProg){ 
               if($res['programador'][$i] == $idProg){
                 echo $programadores['nombre'][$j];
               }
-            }
+            }}
           ?>
         </td>
         <td class="tester<?=$id?>">
-          <?php foreach($testers['idtest'] as $j => $idTest){ 
+          <?php if(isset($testers['idtest'])){foreach($testers['idtest'] as $j => $idTest){ 
               if($res['tester'][$i] == $idTest){
                 echo $testers['nombre'][$j];
               }
-            }
+            }}
           ?>
         </td>
         <td class="gerente<?=$id?>">
-          <?php foreach($gerentes['idgerente'] as $j => $idGer){ 
+          <?php if(isset($gerentes['idgerente'])){foreach($gerentes['idgerente'] as $j => $idGer){ 
               if($res['gerente'][$i] == $idGer){
                 echo $gerentes['nombre'][$j];
               }
-            }
+            }}
           ?>
         </td>
         <td class="jefeArea<?=$id?>">
-          <?php foreach($jefes['idjefe'] as $j => $idJefe){ 
+          <?php if(isset($jefes['idjefe'])){foreach($jefes['idjefe'] as $j => $idJefe){ 
               if($res['jefeArea'][$i] == $idJefe){
                 echo $jefes['nombre'][$j];
               }
-            }
+            }}
           ?>
         </td>
         <td class="usuario<?=$id?>">
-          <?php foreach($usuarioAsi['idusuarioa'] as $j => $idUsr){ 
-              if($res['usuario'][$i] == $idUsr){
+          <?php if(isset( $usuarioAsi['idusuarioa'])){foreach($usuarioAsi['idusuarioa'] as $j => $idUsr){ 
+              if( $res['usuario'][$i] == $idUsr ){
                 echo $usuarioAsi['nombre'][$j];
               }
-            }
+            }}
           ?>
         </td>
         <td class="fechapdp<?=$id?>">
