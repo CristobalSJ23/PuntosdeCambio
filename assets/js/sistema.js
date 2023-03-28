@@ -166,6 +166,9 @@ $(document).ready(function() {
         $('.editar_acciones_cancelar' + id).hide();
     });
 
+    $('.cerrarModal').click(function(){
+        $('#mensajeModal').modal("hide");
+    });
 
 });
 

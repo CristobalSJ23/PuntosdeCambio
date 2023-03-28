@@ -32,7 +32,7 @@
               <div class="col">  <i class="bi bi-check2-circle btn save" data-id="<?= $r ?>"></i> </div> 
               <div class="col"><i class="bi bi-x-circle cancelar btn" data-id="<?=$r?>" data-nombre="<?= $res['nombre'][$i] ?>"
               data-estatus="<?= $res['estatus_aps'][$i];  ?>" data-color="<?= $res['colores_aps'][$i]; ?>" data-arquitecto="<?= $res['nombreArquitecto'][$i] ?>"></i></div>
-              <div class="col"><i class="eliminar bi bi-trash btn" data-id="<?=$r?>"></i></div>
+              
             </div> 
       </td>
     </tr>

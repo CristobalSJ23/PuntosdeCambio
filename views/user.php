@@ -64,7 +64,7 @@ foreach($res['id_usuario'] as $i => $r){
           <div class="col-md-4">
             <label for="inputNombre" class="form-label">Nombre del usuario:</label>
             <div class="d-flex">
-                <input type="text" class="form-control" id="imputNombre" required name="nombre" maxlength="50" placeholder="Escriba el nombre">
+                <input type="text" class="form-control" id="inputNombre" required name="nombre" maxlength="50" placeholder="Escriba el nombre">
             </div>
             <?php if (isset($datos['errorRol'])) { ?>
                 <div class="alert alert-danger"> <?= $datos['errorRol'] ?></div>

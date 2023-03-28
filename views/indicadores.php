@@ -17,28 +17,34 @@
         <td class="url<?= $r ?>" data-id="<?= $r ?>"> <?php echo $res['url'][$i] ?> </td>
         <td class="gerentes<?= $r?>"> 
           <?php 
-            foreach($gerentes['idgerente'] as $j => $idg) { 
-              if($res['gerente'][$i] == $idg) 
-                echo $gerentes['nombre'][$j];
-              //else 
-              //  echo "Sin asignar";
-            } 
+            if(isset($gerentes['idgerente'])){
+              foreach($gerentes['idgerente'] as $j => $idg) { 
+                if($res['gerente'][$i] == $idg) 
+                  echo $gerentes['nombre'][$j];
+                //else 
+                //  echo "Sin asignar";
+              } 
+            }
           ?>
         </td>
         <td class="jefes<?= $r?>">
         <?php 
+         if(isset($jefes['idjefe'])){
             foreach($jefes['idjefe'] as $j => $idg) { 
               if($res['jefe'][$i] == $idg) 
               echo $jefes['nombre'][$j];
             } 
+          }
           ?>
         </td>
         <td class="usuarios<?= $r?>">
           <?php 
+           if(isset($usuarioAsi['idusuarioa'])){
             foreach($usuarioAsi['idusuarioa'] as $j => $ida) {
               if($res['usuarioasi'][$i] == $ida) 
                 echo $usuarioAsi["nombre"][$j];
             }
+          }
           ?>
         </td>
         <td>

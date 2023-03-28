@@ -42,6 +42,10 @@ $(document).ready(function(){
         $('.estatusAps'+id).html('<input name="editarEstatus' + id + '" class="form-control editarEstatus' + id + '" value = "' + htmlEstatus + '"/>');
         $('.estatusAps'+id).removeClass(color);
         
+        $('.editarNombre' + id).keypress(function (tecla) {
+            if ((tecla.charCode < 48 || tecla.charCode > 57) && (tecla.charCode < 65 || tecla.charCode > 90) && (tecla.charCode < 97 || tecla.charCode > 122)) return false;
+        });
+
         if(htmlEstatus == 'ACTIVO'){
             activo = 'selected';
             $('.estatusAps'+id).removeClass("bg-success");
@@ -143,12 +147,16 @@ $(document).ready(function(){
             peticionAjax(obj);
         } else {
             alert('No hay nombre');
-        }
-        setTimeout(window.location.reload(), 3000); 
+        } 
     });
 
     $('.cerrarModal').click(function(){
         $('.crearModal').modal("hide");
+        $('#mensajeModal').modal("hide");
+    });
+
+    $('#imputNombre').keypress(function (tecla) {
+        if ((tecla.charCode < 48 || tecla.charCode > 57) && (tecla.charCode < 65 || tecla.charCode > 90) && (tecla.charCode < 97 || tecla.charCode > 122)) return false;
     });
     
 });
@@ -174,7 +182,7 @@ function peticionAjax(datos) {
                     $('.mensaje_sistema').html(res.res);
                     $('.mensaje').addClass("bg-success");
                     $("#mensajeModal").modal("show"); 
-                                    
+                    time();      
                     break;
                 case "delete":
                     $('.estatusAps' + datos.id).removeClass("bg-success");
@@ -203,4 +211,10 @@ function peticionAjax(datos) {
     });
 
 
+}
+
+function time() {
+    setTimeout(function(){
+        window.location.reload();
+    }, 1000);
 }

@@ -50,10 +50,27 @@ $(document).ready(function() {
         $('.apt_pat' + id).html('<input style="width:100%" name="aptPat' + id + '" class="form-control aptPat' + id + '" value="' + htmlPaterno + '"/>');
         $('.apt_mat' + id).html('<input style="width:100%" name="aptMat' + id + '" class=" form-control aptMat' + id + '" value="' + htmlMat + '"/>');
         $('.tipo_usuario' + id).html('<input style="width:100%" name="tipoUsuario' + id + '" class=" form-control tipoUsuario' + id + '" value="' + htmltipoUsuario + '"/>');
-        $('.correo' + id).html('<input style="width:100%" name="correo' + id + '" class="form-control correo_editar' + id + '" value="' + htmlCorreo + '"/>');
+        $('.correo' + id).html('<input type="email" style="width:100%" name="correo' + id + '" class="form-control correo_editar' + id + '" value="' + htmlCorreo + '"/>');
         $('.editar_estatus_' + id).html('<input style="width:100%" name="editarEstatus' + id + '" class="editarEstatus' + id + '" value="' + htmleditarEstatus + '"/>');
 
         $('.editar_estatus_' + id).removeClass(color);
+
+        $('.editarNombre' + id).keypress(function (tecla) {
+            if ((tecla.charCode < 65 || tecla.charCode > 90) && (tecla.charCode < 97 || tecla.charCode > 122)) return false;
+        });
+
+        $('.aptPat' + id).keypress(function (tecla) {
+            if ((tecla.charCode < 65 || tecla.charCode > 90) && (tecla.charCode < 97 || tecla.charCode > 122)) return false;
+        });
+
+        $('.aptMat' + id).keypress(function (tecla) {
+            if ((tecla.charCode < 65 || tecla.charCode > 90) && (tecla.charCode < 97 || tecla.charCode > 122)) return false;
+        });
+
+        $('.tipoUsuario' + id).keypress(function (tecla) {
+            if ((tecla.charCode < 65 || tecla.charCode > 90) && (tecla.charCode < 97 || tecla.charCode > 122)) return false;
+        });
+
 
         if (htmleditarEstatus == 'ACTIVO') {
             activo = 'selected';
@@ -100,19 +117,7 @@ $(document).ready(function() {
         var html_correo = $('.correo_editar' + id).val();
         var html_estatus = $('.guardar_estatus_' + id).val();
 
-        $('.editar_nombre_' + id).html(html_nombre);
-        $('.apt_pat' + id).html(html_pat);
-        $('.apt_mat' + id).html(html_mat);
-        $('.tipo_usuario' + id).html(html_us);
-        $('.correo' + id).html(html_correo);
         
-        if(html_estatus==1){
-            $(".editar_estatus_"+id).html("ACTIVO");
-            $(".editar_estatus_"+id).addClass("bg-success");
-        }else{
-            $(".editar_estatus_"+id).html("INACTIVO");
-            $(".editar_estatus_"+id).addClass("bg-warning");
-        }
 
         $('.correo' + id).blur();
 
@@ -167,13 +172,29 @@ $(document).ready(function() {
         obj.type = 'POST';
         obj.accion = 'update';
 
-        $('.editar_acciones_'+id).show();
-        $('.editar_acciones_cancelar'+id).hide();
-        $('.mensaje').addClass("bg-success");
+        
+        if(validarEmail(html_correo) == true) {
+            $('.editar_nombre_' + id).html(html_nombre);
+            $('.apt_pat' + id).html(html_pat);
+            $('.apt_mat' + id).html(html_mat);
+            $('.tipo_usuario' + id).html(html_us);
+            $('.correo' + id).html(html_correo);
 
-        peticionAjax(obj);
+            if(html_estatus==1){
+                $(".editar_estatus_"+id).html("ACTIVO");
+                $(".editar_estatus_"+id).addClass("bg-success");
+            }else{
+                $(".editar_estatus_"+id).html("INACTIVO");
+                $(".editar_estatus_"+id).addClass("bg-warning");
+            }
 
-
+            $('.editar_acciones_'+id).show();
+            $('.editar_acciones_cancelar'+id).hide();
+            $('.mensaje').addClass("bg-success");
+            peticionAjax(obj);
+        } else {
+            alert("La dirección de email es incorrecta!.");
+        }
 
     });
 
@@ -191,18 +212,23 @@ $(document).ready(function() {
         var correo = $('#inputCorreo').val();
         var password = $('#inputPassword').val();
         var datos = $(".frmGuardar").serialize();
-        
-        if (nombre != '' && paterno != '' && materno != '' && tipoUsuario != '' && correo != '' && password != '') {
-            obj.url = '../users/save';
-            obj.data = datos;
-            obj.type = 'POST';
-            obj.accion = 'save';
-
-            peticionAjax(obj);
+        if(validarEmail(correo) == true) {
+            if (nombre != '' && paterno != '' && materno != '' && tipoUsuario != '' && correo != '' && password != '') {
+                obj.url = '../users/save';
+                obj.data = datos;
+                obj.type = 'POST';
+                obj.accion = 'save';
+    
+                peticionAjax(obj);
+                
+            } else {
+                alert('No hay nombre');
+            }
         } else {
-            alert('No hay nombre');
+            alert("La dirección de email es incorrecta!.");
         }
-        window.location.reload();
+        
+       
     });
 
     $('.eliminar').click(function(){
@@ -218,7 +244,23 @@ $(document).ready(function() {
 
     $('.cerrarModal').click(function(){
         $('.crear_usuario_modal').modal("hide");
+        $('#mensajeModal').modal("hide");
     });
+
+    $('#inputNombre').keypress(function (tecla) {
+        if ((tecla.charCode < 65 || tecla.charCode > 90) && (tecla.charCode < 97 || tecla.charCode > 122)) return false;
+    });
+    $('#inputPaterno').keypress(function (tecla) {
+        if ((tecla.charCode < 65 || tecla.charCode > 90) && (tecla.charCode < 97 || tecla.charCode > 122)) return false;
+    });
+    $('#inputMaterno').keypress(function (tecla) {
+        if ((tecla.charCode < 65 || tecla.charCode > 90) && (tecla.charCode < 97 || tecla.charCode > 122)) return false;
+    });
+    $('#inputTipoUsuario').keypress(function (tecla) {
+        if ((tecla.charCode < 65 || tecla.charCode > 90) && (tecla.charCode < 97 || tecla.charCode > 122)) return false;
+    });
+
+
 
 });
 
@@ -235,7 +277,8 @@ function peticionAjax(datos) {
                     $('.crear_usuario_modal').modal("hide");
                     $('.mensaje_sistema').html(res.res);
                     $('.mensaje').addClass("bg-success");
-                    $("#mensajeModal").modal("show");                      
+                    $("#mensajeModal").modal("show");  
+                    time();                    
                     break;
 
                 case "update":
@@ -256,4 +299,18 @@ function peticionAjax(datos) {
     });
 
 
+}
+
+function validarEmail(valor) {
+    if (/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test(valor)){
+     return true;
+    } else {
+     return false;
+    }
+}
+
+function time() {
+    setTimeout(function(){
+        window.location.reload();
+    }, 1000);
 }
